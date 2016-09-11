@@ -4,20 +4,20 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
     <%# <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">%>
-	<title>Voting App Service FCC</title>
+	<title>Night Life Service FCC</title>
 </head>
 <body>
  <div class='ui fixed inverted menu'>
  	<div class='ui container'>
- 		<div class='header item'><i class='idea icon'>Vote</i></div>
- 		<a href="/" class='item'>Home</a>
+ 		<div class='item'>Night life</div>
+	<a href="/" class='item'>Home</a>
     <a href="/search" class='item'>Search</a>
  		<% if(!currentUser){ %>
  		<a href="/register" class='item'>Register</a>
  		<a href="/login" class='item'>Login</a>
  	   <% } else { %>	
  	   	<a href="/mypolls" class='item'>Signed In As <%= currentUser.username %></a>
- 		<a href="/add" class='item'>Add New Poll</a>
+ 		<a href="/mysites" class='item'>My Sites</a>
  		<a href="/logout" class='item'>LogOut</a>
  	   <% } %>	
  	</div>

@@ -10,7 +10,8 @@ var methodOverride = require('method-override');
 var LocalStrategy = require('passport-local');
 var router = express.Router();
 var passportLocalMongoose = require("passport-local-mongoose");
-
+var request = require('request');
+var Yelp = require('yelp');
 
 mongoose.connect('mongodb://localhost/nightlife');
 
@@ -83,18 +84,38 @@ app.get("/login", function(req, res){
 // handling login logic
 app.post("/login", passport.authenticate("local", 
     {
-        successRedirect: "/polls",
+        successRedirect: "/home",
         failureRedirect: "/login"
     }), function(req, res){
 });
 
 app.get("/logout", function(req, res){
    req.logout();
-   res.redirect("/polls");
+   res.redirect("/home");
 });
 
 app.get('/search',isLoggedIn,function(req,res){
 	res.render('search');
+});
+
+app.post('/search',isLoggedIn,function(req,res){
+  var search = req.body.search;
+  var yelp = new Yelp({
+  consumer_key: 'Jw5fzOXM_4CYRs6ls7S5PA',
+  consumer_secret: 'ajLfo3KSwB77anx_H8j3RRus-go',
+  token: 'GS--x94r8y-JEeCQTSvwCmzmPr-ZqgT6',
+  token_secret: '8E3g9Op3FFc_7_j5QiVHlFjW9g8',
+});
+
+  yelp.search({ term: 'restaurants', location: search })
+  .then(function (data) {
+    var data2 = JSON.stringify(data);
+    res.render('show',{data2:data2});
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
+
 });
 
 function isLoggedIn(req, res, next){
